@@ -235,6 +235,8 @@ Another library that's useful for manipulations like this is lodash.
 ## Homework
 
 Modify the last function so it returns something like this
+
+```
 {
     allSpells: [
         ...spells
@@ -270,6 +272,7 @@ Modify the last function so it returns something like this
         ]
     }
 }
+```
 
 # Referneces & Links
 
