@@ -195,16 +195,16 @@ data = Array.prototype.map.call(filteredTables, table => {
                 schoolSpells = [];
             }
         } else {
-            $cells = $row.find('td');
+            const $cells = $row.find('td');
             // This is a spell row.
             const spell = {
-                name: $(cells[0]).text,
-                components: $(cells[1]).text,
-                description: $(cells[2]).text,
-                source: $(cells[3]).text,
+                name: $($cells[0]).text().trim(),
+                components: $($cells[1]).text().trim(),
+                description: $($cells[2]).text().trim(),
+                source: $($cells[3]).text().trim(),
                 // This is how we can get the linked url using jQuery helpers.
-                sourceUrl: $(cells[3]).find('a').attr('href'),
-                url: $(cells[0]).find('a').attr('href'),
+                sourceUrl: $($cells[3]).find('a').attr('href'),
+                url: $($cells[0]).find('a').attr('href'),
             }
             schoolSpells.push(spell);
             allSpells.push(spell);
