@@ -86,7 +86,6 @@ Now that we have a way to filter out or reject table let's take a look at the ta
 
 
 ```
-$tables
 for (table of tables) {
     var captions = $(table).find('caption');
     if (captions.length > 0) {
@@ -177,8 +176,8 @@ data = Array.prototype.map.call(filteredTables, table => {
     const level = parseInt(caption.match(/^(\d+).*/)[1]);
     const schools = {};
     const allSchools = [];
-    const currentSchool = null;
-    const schoolSpells = []
+    let school = null;
+    let schoolSpells = []
     const allSpells = [];
     for(row of $(table).find('tr')) {
         const $row = $(row);
@@ -187,11 +186,11 @@ data = Array.prototype.map.call(filteredTables, table => {
             // This is our main header row so do nothing.
         } else if ($headerCells.length === 1) {
             // This is a bit of a cheat because we know what text is in the row.
-            const schoolName = $headerCells.text();
+            school = $headerCells.text();
             // This is a school header row.
-            allSchools.push(schoolName)
-            if (currentSchool !== null) {
-                schools[currentSchool] = schoolSpells;
+            allSchools.push(school)
+            if (school !== null) {
+                schools[school] = schoolSpells;
                 schoolSpells = [];
             }
         } else {
@@ -205,14 +204,16 @@ data = Array.prototype.map.call(filteredTables, table => {
                 // This is how we can get the linked url using jQuery helpers.
                 sourceUrl: $($cells[3]).find('a').attr('href'),
                 url: $($cells[0]).find('a').attr('href'),
+                level,
+                school,
             }
             schoolSpells.push(spell);
             allSpells.push(spell);
         }
     }
     // Cleanup we have to do this here because we process this when going on to the next school and that step doesn't exist for the last school
-    if (currentSchool !== null) {
-        schools[currentSchool] = schoolSpells;
+    if (school !== null) {
+        schools[school] = schoolSpells;
         schoolSpells = [];
     }
     return {level, schools, allSchools, allSpells};
